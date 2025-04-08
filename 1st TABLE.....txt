@@ -1,0 +1,40 @@
+1st TABLE....
+
+-- Account Table
+CREATE TABLE Account (
+    AccountID BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    AccountNo INT NOT NULL,
+    IsSaving BIT NOT NULL,
+    CreatedBy VARCHAR(250) NOT NULL,
+    CreatedDate DATETIME NOT NULL DEFAULT GETDATE()
+);
+
+-- UserAccountMapping Table
+CREATE TABLE UserAccountMapping (
+    UserAccountMapping BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    UserID BIGINT NOT NULL,
+    AccountID BIGINT NOT NULL,
+    CreatedBy VARCHAR(250) NOT NULL,
+    CreatedDate DATETIME NOT NULL DEFAULT GETDATE(),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),       
+    FOREIGN KEY (AccountID) REFERENCES Account(AccountID)
+);
+
+-- Address Table
+CREATE TABLE Address (
+    AddressID BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    UserID BIGINT NOT NULL,
+    Address NVARCHAR(MAX) NOT NULL,
+    CreatedBy VARCHAR(250) NOT NULL,
+    CreatedDate DATETIME NOT NULL DEFAULT GETDATE(),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)      
+);
+
+-- AccountTransaction Table
+CREATE TABLE AccountTransaction (
+    AccountTransaction BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    Amount DECIMAL(10,2) NOT NULL,
+    IsDebit BIT NOT NULL,
+    CreatedBy VARCHAR(250) NOT NULL,
+    CreatedDate DATETIME NOT NULL DEFAULT GETDATE()
+);
